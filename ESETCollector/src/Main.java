@@ -1,6 +1,6 @@
 
 public class Main {
 	public static void main(String [] str) {
-		System.out.println("ESETCollector");
+		System.out.println("ESETCollector 1");
 	}
 }
