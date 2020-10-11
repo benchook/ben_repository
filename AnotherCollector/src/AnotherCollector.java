@@ -4,5 +4,6 @@ public class AnotherCollector {
 		System.out.println("AnotherCollector branch1 and branch2");
 		System.out.println("AnotherCollector another change");
 	        System.out.println("Another change from local");
+		System.out.println("AnotherCollector another change from remote");
 	}
 }
