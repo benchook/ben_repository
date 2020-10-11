@@ -1,6 +1,6 @@
 
 public class AnotherCollector {
 	public static void main(String [] strs) {
-		System.out.println("AnotherCollector A");
+		System.out.println("AnotherCollector B");
 	}
 }
