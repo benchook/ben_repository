@@ -18,8 +18,8 @@ import com.vnt.aws.utils.Utils;
 @RestController
 public class Controller {
 	private static final String INDEX_PATH = "/index.html";
-	private static String AWS_ACCESS_ID = "AKIAVKGGLJK2A77ASGXY";
-	private static String SECRET_ACCESS_KEY = "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";
+	private static String AWS_ACCESS_ID = "MANDATORY";
+	private static String SECRET_ACCESS_KEY = "MANDATORY";
 	
 	@GetMapping("/entry")
 	public String entry() {
