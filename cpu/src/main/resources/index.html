@@ -1,0 +1,96 @@
+<html>
+<head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+		function httpGet(theUrl)	{
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+			xmlHttp.send( null );
+			return xmlHttp.responseText;
+		}
+		
+		function getDates(json) {
+			var dates = [];
+			var i = 0;
+			for (i = 0; i < json.length; ++i) {
+				dates.push(json[i].x);
+			}
+			return dates;
+		}
+		
+		function getAverages(json) {
+			var averages = [];
+			var i = 0;
+			for (i = 0; i < json.length; ++i) {
+				averages.push(json[i].y);
+			}
+			return averages;
+		}
+		
+		function normalize(json) {
+			var i = 0;
+			for (i = 0; i < json.length; ++i) {
+				json[i].x = new Date(json[i].x);
+			}
+			return json;
+		}
+
+		function load() {
+			var base_url = '/cpu'; //http://127.0.0.1:8080/cpu
+			var ip = document.getElementById("ip").value;
+			var time_period = document.getElementById("time_period").value;
+			var period_dd = document.getElementById("select_period").value;
+			var url = base_url.concat('?time_period=', time_period, '&ip=', ip, '&period_dd=', period_dd);
+			var json = normalize(JSON.parse(httpGet(url)));
+			
+			var dates = getDates(json);
+			var averages = getAverages(json);
+			
+			
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var chart = new Chart(ctx, {
+			// The type of chart we want to create
+			type: 'line',
+
+			// The data for our dataset
+			data: {
+				labels: dates,
+				datasets: [{
+					label: 'Metric data',
+					backgroundColor: 'rgb(255, 99, 132)',
+					borderColor: 'rgb(255, 99, 132)',
+					data: averages,
+					cubicInterpolationMode: 'monotone'
+				}]
+			},
+
+			// Configuration options go here
+			options: {}
+			});
+		}
+	</script>
+</head>
+<body>
+	<h1><b>AWS Instance CPU usage</b></h1>
+	<label for="time_period">Time period:</label>
+	<input type="text" id="time_period" name="time_period">
+
+	<br>
+	<label for="ip">IP address:</label>
+	<input type="text" id="ip" name="ip">
+
+	<br>
+	<label for="period_ddd">Period:</label>
+	<select name="period_dd" id="select_period">
+		<option value="lasthour">Last hour</option>
+		<option value="lastday">Last day</option>
+		<option value="lastweek">Last week</option>
+		<option value="lastmonth">Last month</option>
+	</select>
+
+	<button onclick="load()">load</button>
+	<br>
+	<canvas id="myChart"></canvas>
+</body>
+</html>
+
